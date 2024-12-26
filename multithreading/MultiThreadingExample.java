@@ -12,6 +12,11 @@ public class MultiThreadingExample{
         Thread t2 = new Thread(r2);
         t2.start();
 
+        Thread t3 = new Thread(()->{
+            System.out.println(Thread.currentThread().getName()+" using Lambda function");
+        });
+        t3.start();
+
     }
 
 }
