@@ -246,3 +246,5 @@ Concurrency can be achived using:
 // TODO: Continue CAS again.
 
 
+TODO: Generic classes
+
