@@ -107,7 +107,29 @@ Counter- AKA program counter,points to instruction which is getting executed, in
 Ways to create a Thread
 1. By implementing Runnable interface - better if we need other class extending capabilities
 2. extending Thread class - restricts to just one class being extended
+```java
+public class MultiThreadingExample{
+    public static void main(String[] args) {
+        Runnable r1 = () -> {
+            System.out.println(Thread.currentThread().getName());
+        };
+        Thread t1 = new Thread(r1);
+        t1.start();
+        Runnable r2 = () -> {
+            System.out.println(Thread.currentThread().getName());
+        };
 
+        Thread t2 = new Thread(r2);
+        t2.start();
+
+        Thread t3 = new Thread(()->{
+            System.out.println(Thread.currentThread().getName()+" using Lambda function");
+        });
+        t3.start();
+
+    }
+}
+```
 Runnable interface is a functional interface that has one run() method.
 Thread class also implements Runnable and has other thread associated methods.like init, sleep, notify etc..
 
@@ -248,3 +270,80 @@ Concurrency can be achived using:
 
 TODO: Generic classes
 
+## Java Collection
+- introducted in java 1.2
+- represents a group of objects. Its an interface which provides methods to work on group of objects.
+
+Mentioned below are the most commonly used methods which are implemented by child classes like ArrayList, LinkedList etc
+    1.  size()
+    2.  isEmpty()
+    3.  contains()
+    4.  toArray()
+    5.  add()
+    6.  remove()
+    7.  addAll()
+    8.  removeAll()
+    9.  clear()
+    10. equals()
+
+### Collection vs Collections
+- Collection is a part of Java Collection Framework
+- Collections is a Utility class which provides static methods used to operate on Collections. 
+
+### Iterable
+- used to traverse collections
+
+```java
+List<Integer> values = new ArrayList<>();
+values.add(1);
+values.add(2);
+values.add(3);
+values.add(4);
+values.add(5);
+
+
+System.out.println("Using iterator");
+Iterator<Integer> iterator = values.iterator();
+
+while(iterator.hasNext()){
+    int value = iterator.next();
+    System.out.println(value);
+    if(value==3){
+        iterator.remove();
+    }
+}
+
+```
+
+### Comparator vs Comparable
+- Both provides a way to sort the objects.
+- Comparable: It defines natural ordering within the class. compareTo(). Natural order sorting
+- Comparator: It defines external sorting logic. compare(). Custom sorting
+
+### Thread safe alternatives
+- Priority Queue => PriorityBlockingQueue
+- ArrayDeque => ConcurrentLinkedDeque
+- ArrayList => CopyOnWriteArrayList
+- LinkedList => CopyOnWriteArrayList
+- Vector - same as ArrayList, Already threadsafe
+- Stack - threadsafe already as this is a child of Vector
+- HashMap - HashTable (synchronised version of HashMap), ConcurrentHashMap
+- LinkedHashMap - Not thread safe, we have to make it thread safe manually
+- HashSet - We can use new ConcurrentHashMap.newKeySet() to create the set thread safe
+
+### LinkedHashMap
+- Same as HashMap
+- Maintains insertion order or Maintains Access order (Uses doubly LinkedList for both )
+
+### Vector
+- Same as ArrayList, Threadsafe.
+- Puts lock when operations are being performed
+- Less efficient then ArrayList as for each operation it do lock/unlock internally.
+### Queue
+- Queue is an interface of Collections.
+- add()* - Inserts the element into the queue. True if insertion is sucess and Exception if insertion fails. Null is not allowed.
+- offer() - Inserts the element into the queue. True if insertion is sucess and False if insertion fails. Null is not allowed.
+- remove()* - Retrieves and Removes the head of the queue. Returns Exception(NoSuchElementException) if Queue is Empty.
+- poll() - Retrieves and Removes the head of the queue. Returns Null if Queue is Empty.
+- peek() - Retrieves the value present at the head of the queue but do not remove it.Null if queue is empty.
+- element()* - Retrieves the value present at the head of the queue but do not remove it. Returns an exception(NoSuchElementException) if queue is empty.
